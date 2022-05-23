@@ -6,7 +6,7 @@ const Navbar = ({ user, setToken, setUser }) => {
     <>
       <Link to="/">Home</Link>
       <Link to="/Posts">Posts</Link>
-      <Link to="/Register">Profile</Link>
+      <Link to="/Profile">Profile</Link>
       <Link
         to="/"
         onClick={() => {

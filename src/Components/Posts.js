@@ -1,5 +1,9 @@
-const Posts = ({ posts }) => {
-  // console.log(posts);
+import { useState } from "react";
+
+const Posts = ({ posts, history, setPosts, setSinglePost }) => {
+  const grabPost = (post) => {
+    return setSinglePost(post), history.push("/PostDetails");
+  };
   return (
     <>
       <h1>Posts</h1>
@@ -11,9 +15,20 @@ const Posts = ({ posts }) => {
             <p>{post.description}</p>
             <h3>{post.price}</h3>
             <hr></hr>
+            <button
+              value={post}
+              onClick={(e) => {
+                grabPost(post);
+              }}
+            >
+              Details
+            </button>
           </div>
         );
       })}
+      <button onClick={() => history.push("/createposts")}>
+        Create a Post
+      </button>
     </>
   );
 };

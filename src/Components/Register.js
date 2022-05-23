@@ -2,13 +2,16 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { API } from "../App";
 
-const Register = ({ setToken }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const Register = ({
+  setToken,
+  username,
+  setUsername,
+  password,
+  setPassword,
+  history,
+}) => {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
-
-  const history = useHistory;
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -16,6 +19,8 @@ const Register = ({ setToken }) => {
     if (password !== confirm) {
       setError("Passwords do not match.");
       return;
+    } else if (password.length < 8) {
+      setError("Password must be eight characters or more");
     }
     const resp = await fetch(`${API}/users/register`, {
       method: "POST",
@@ -36,11 +41,10 @@ const Register = ({ setToken }) => {
     setToken(info.data.token);
     localStorage.setItem("token", info.data.token);
     return setError("Registration Successful!");
-    // history("/posts");
   };
 
   return (
-    <>
+    <b>
       <h1>Register: </h1>
       <form onSubmit={handleRegister}>
         <input
@@ -64,7 +68,14 @@ const Register = ({ setToken }) => {
         <button>Register</button>
       </form>
       <p>{error}</p>
-    </>
+      <form
+        onSubmit={() => {
+          history.push("/login");
+        }}
+      >
+        <button type="submit">Already have an account?</button>
+      </form>
+    </b>
   );
 };
 
